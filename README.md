@@ -6,9 +6,11 @@ Migrating a database from MongoDB Atlas to a self-hosted MongoDB instance involv
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Export-Data-from-MongoDB-Atlas](#export-data-from-mongodb-atlas)
+- [Import-Data-into-Self-Hosted-MongoDB](#import-data-into-self-Hosted-mongodb)
+- [Verify-the-Migration](#verify-the-migration)
 - [Step-by-Step Migration Guide](#step-by-step-migration-guide)
 
-## Prerequisites
+## 1. Prerequisites
 Before starting the migration, ensure the following:
 
 1. **MongoDB Installed on Self-Hosted Server**: 
@@ -32,7 +34,7 @@ For **MacOS**:
 4. **Network Configuration**: 
    - Ensure your self-hosted MongoDB instance is accessible (e.g., open the necessary ports like `27017`).
 
-## Export Data from MongoDB Atlas
+## 2. Export Data from MongoDB Atlas
 You can use the `mongodump` tool to export data from MongoDB Atlas.
 
 ### Step 1: Get the MongoDB Atlas Connection String
@@ -50,9 +52,6 @@ Use the `mongodump` command to export the data from MongoDB Atlas.
 ```bash
 mongodump --uri="mongodb+srv://<username>:<password>@cluster0.mongodb.net/<database_name>" --out=/path/to/backup
 ```
-   * Replace <username> and <password> with your MongoDB Atlas credentials.
-   * Replace <database_name> with the name of the database you want to export.
-   * Replace /path/to/backup with the directory where you want to store the backup.
 
 **Example**:
   ```bash
@@ -60,3 +59,66 @@ mongodump --uri="mongodb+srv://<username>:<password>@cluster0.mongodb.net/<datab
    ```
 
 This will create a backup of the `mydatabase` database in the `/backups/mongodb` directory.
+
+## 3. Import Data into Self-Hosted MongoDB
+
+Once you have exported the data, you can use the `mongorestore` tool to import it into your self-hosted MongoDB instance.
+
+### Step 1: Ensure MongoDB is Running
+
+Make sure your self-hosted MongoDB instance is running
+
+```bash
+sudo systemctl start mongod
+```
+
+### Step 2: Run mongorestore
+
+Use the `mongorestore` command to restore the data into your self-hosted MongoDB instance:
+
+```bash
+mongorestore --host localhost --port 27017 --db <database_name> /path/to/backup/<database_name>
+```
+
+**Example**
+
+```bash
+mongorestore --host localhost --port 27017 --db mydatabase /backups/mongodb/mydatabase
+```
+
+This will restore the `mydatabase` database into your self-hosted MongoDB instance.
+
+## 4. Verify the Migration
+
+After restoring the data, verify that the migration was successful.
+
+### Step 1: Connect to Self-Hosted MongoDB
+
+Use the `mongosh` shell to connect to your self-hosted MongoDB instance:
+
+```bash
+mongosh
+```
+
+### Step 2: Check Databases
+
+List all databases to ensure your database is present:
+```bash
+show dbs
+```
+
+### Step 3: Check Collections
+
+Switch to your database and list its collections:
+```bash
+use mydatabase
+show collections
+```
+
+### Step 4: Check if the Collection Has Data
+
+```bash
+db.collection_name.countDocuments()
+```
+
+By following this step-by-step guide, you can successfully migrate your MongoDB database from MongoDB Atlas to a self-hosted MongoDB instance.

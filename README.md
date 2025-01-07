@@ -6,6 +6,7 @@ Migrating a database from MongoDB Atlas to a self-hosted MongoDB instance involv
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Step-by-Step Migration Guide](#step-by-step-migration-guide)
+- [Export-Data-from-MongoDB-Atlas](#export-data-from-mongodb-atlas)
 
 ## Prerequisites
 Before starting the migration, ensure the following:
@@ -19,3 +20,14 @@ Before starting the migration, ensure the following:
 For **Ubuntu**:
    ```bash
    sudo apt install mongodb-database-tools
+   ```
+For **MacOS**:
+   ```bash
+   brew install mongodb-database-tools
+   ```
+
+3. **Access to MongoDB Atlas**: 
+   - Please ensure you have the connection string for your MongoDB Atlas cluster.
+
+4. **Network Configuration**: 
+   - Ensure your self-hosted MongoDB instance is accessible (e.g., open the necessary ports like `27017`).

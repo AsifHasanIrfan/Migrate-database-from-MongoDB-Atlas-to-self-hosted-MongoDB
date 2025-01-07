@@ -41,7 +41,7 @@ You can use the `mongodump` tool to export data from MongoDB Atlas.
 2. Navigate to your project and select your cluster.
 3. Click **Connect** and choose **Connect Your Application**.
 4. Copy the connection string. It should look something like this:
-   `mongodb+srv://<username>:<password>@cluster0.mongodb.net/myDatabase`
+   `mongodb+srv://<username>:<password>@cluster0.mongodb.net/mydatabase`
 
 ### Step 2: Run mongodump
 
@@ -50,3 +50,12 @@ Use the `mongodump` command to export the data from MongoDB Atlas.
 ```bash
 mongodump --uri="mongodb+srv://<username>:<password>@cluster0.mongodb.net/<database_name>" --out=/path/to/backup
 ```
+   * Replace <username> and <password> with your MongoDB Atlas credentials.
+   * Replace <database_name> with the name of the database you want to export.
+   * Replace /path/to/backup with the directory where you want to store the backup.
+**Example**:
+  ```bash
+   mongodump --uri="mongodb+srv://admin:password@cluster0.mongodb.net/mydatabase" --out=/backups/mongodb
+   ```
+
+This will create a backup of the `mydatabase` database in the `/backups/mongodb` directory.
